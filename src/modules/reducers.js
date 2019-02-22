@@ -1,18 +1,43 @@
 const appReducer = (state, action) => {
   switch (action.type) {
-    case "ADD_PRODUCT": {
-      if (action.id === state.products[action.id].id) {
-        return console.log("good");
-      }
-    }
+    case "ADD_PRODUCT":
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          [action.payload.id]: action.payload
+        }, cart: { ...state.cart,
+          [action.payload.id]: action.cart } 
+      };
     case "CHECKOUT":
-      return state;
+      return {
+        ...state, cart: action.payload
+      };
     case "REMOVE_ONE":
-      return state;
+      return  {
+        ...state,
+        products: {
+          ...state.products,
+          [action.payload.id]: action.shop
+        },
+         cart: { ...state.cart,
+          [action.payload.id]: action.payload } 
+      };
     case "REMOVE_ALL":
-      return state;
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          [action.payload.id]: action.payload
+        }, 
+        cart: Object.keys(state.cart).reduce((result, key) => {
+          if(Number(key) !== action.payload.id){
+            result[key]= state.cart[key]
+          } return result
+        },{}) 
+      };
     default:
-      return state;
+    return state
   }
 };
 

@@ -9,12 +9,14 @@ import { Provider } from "react-redux";
 
 import products from "./products.json";
 
+const initialState = {
+  products,
+  cart: {}
+}
+
 const store = createStore(
   appReducer,
-  {
-    products,
-    cart: {}
-  },
+  initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
